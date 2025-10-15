@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+        .admin-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .admin-form {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .tech-tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .tech-tag-item {
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .remove-tag {
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        .btn-admin {
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        .btn-admin:hover {
+            background: var(--accent-hover);
+        }
+        .projects-list {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .project-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-edit, .btn-delete {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-edit {
+            background: #4CAF50;
+            color: white;
+        }
+        .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        .skills-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .messages-container {
+            margin-top: 20px;
+        }
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        .messages-stats span {
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .message-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .message-item.new {
+            border-left: 4px solid #10b981;
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .message-meta {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        .message-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-new { background: #dcfce7; color: #166534; }
+        .status-read { background: #dbeafe; color: #1e40af; }
+        .status-replied { background: #f3e8ff; color: #7c3aed; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">DevFolio Admin</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="projects.html" class="nav-link">View Projects</a></li>
+                <li><a href="admin.html" class="nav-link active">Admin Panel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Project Management</h1>
+            <p>Add, edit, and manage your portfolio projects</p>
+        </div>
+
+        <div class="admin-form">
+            <h2>Add New Project</h2>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" name="title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectCategory">Category</label>
+                    <select id="projectCategory" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="web">Web Application</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="api">API Integration</option>
+                        <option value="game">Game Development</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Description</label>
+                    <textarea id="projectDescription" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectImage">Project Image URL</label>
+                    <input type="url" id="projectImage" name="image" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="projectIcon">Icon Class (Font Awesome)</label>
+                    <input type="text" id="projectIcon" name="icon" placeholder="fas fa-code" value="fas fa-code">
+                </div>
+
+                <div class="form-group">
+                    <label for="liveUrl">Live Demo URL</label>
+                    <input type="url" id="liveUrl" name="liveUrl" placeholder="https://example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="githubUrl">GitHub URL</label>
+                    <input type="url" id="githubUrl" name="githubUrl" placeholder="https://github.com/username/repo">
+                </div>
+
+                <div class="form-group">
+                    <label for="techInput">Technologies (Press Enter to add)</label>
+                    <input type="text" id="techInput" placeholder="React, Node.js, MongoDB...">
+                    <div class="tech-tags-input" id="techTags"></div>
+                </div>
+
+                <button type="submit" class="btn-admin">Add Project</button>
+                <button type="button" class="btn-admin" onclick="clearForm()">Clear Form</button>
+            </form>
+        </div>
+
+        <div class="projects-list">
+            <h2>Existing Projects</h2>
+            <div id="projectsList"></div>
+        </div>
+
+        <div class="admin-form">
+            <h2>Skills Management</h2>
+            <div class="skills-tabs">
+                <button class="tab-btn active" onclick="showSkillTab('categories')">Skill Categories</button>
+                <button class="tab-btn" onclick="showSkillTab('individual')">Individual Skills</button>
+            </div>
+            
+            <div id="categoriesTab" class="tab-content active">
+                <form id="categoryForm">
+                    <div class="form-group">
+                        <label for="categoryName">Category Name</label>
+                        <input type="text" id="categoryName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDescription">Description</label>
+                        <input type="text" id="categoryDescription" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryIcon">Icon Class</label>
+                        <input type="text" id="categoryIcon" name="icon" placeholder="fas fa-palette" required>
+                    </div>
+                    <button type="submit" class="btn-admin">Add Category</button>
+                </form>
+                <div id="categoriesList"></div>
+            </div>
+            
+            <div id="individualTab" class="tab-content">
+                <form id="skillForm">
+                    <div class="form-group">
+                        <label for="skillCategory">Category</label>
+                        <select id="skillCategory" name="category" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="skillName">Skill Name</label>
+                        <input type="text" id="skillName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="skillIcon">Icon Class</label>
+                        <input type="text" id="skillIcon" name="icon" placeholder="fab fa-html5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="skillPercent">Percentage</label>
+                        <input type="number" id="skillPercent" name="percent" min="0" max="100" required>
+                    </div>
+                    <button type="submit" class="btn-admin">Add Skill</button>
+                </form>
+                <div id="skillsList"></div>
+            </div>
+        </div>
+
+        <div class="admin-form">
+            <h2>Contact Messages</h2>
+            <div class="messages-container">
+                <div class="messages-header">
+                    <div class="messages-stats">
+                        <span id="totalMessages">0</span> Total Messages
+                        <span id="newMessages">0</span> New Messages
+                    </div>
+                    <button class="btn-admin" onclick="refreshMessages()">Refresh</button>
+                </div>
+                <div id="messagesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="admin-backend.js"></script>
+</body>
+</html>
