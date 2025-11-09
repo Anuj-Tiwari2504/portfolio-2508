@@ -216,6 +216,9 @@ body {
     position: relative;
     background: var(--gradient);
     overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .hero-bg {
@@ -1057,6 +1060,11 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.footer-links{
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr; 
+   gap:5rem;
+}
 /* Footer */
 .footer {
     background: var(--dark);
@@ -1404,6 +1412,12 @@ body {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
+        background-position: center;
+        background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
     }
     
     .hero-title {
@@ -1430,7 +1444,13 @@ body {
     .hamburger {
         display: flex;
     }
-    
+   .hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
     .nav-menu {
         position: fixed;
         top: 100%;
@@ -1489,6 +1509,13 @@ body {
         padding: 0 1rem;
     }
     
+     .hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
     .hero-title {
         font-size: 2rem;
     }
@@ -1556,4 +1583,43 @@ body {
   object-fit: cover;  /* image crop fit */
   border: 3px solid #fff; /* optional border */
   box-shadow: 0 0 10px rgba(0,0,0,0.3); /* optional shadow */
+}
+
+
+/* Ensure full width layout on mobile */
+body, html {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* For main hero section */
+.hero-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Fix navbar or hamburger menu overflow */
+.navbar {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+/* If using flex or grid in hero section */
+/* .hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+} */
+
+/* Fix for unwanted scroll */
+* {
+  box-sizing: border-box;
 }
